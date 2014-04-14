@@ -24,6 +24,9 @@ details.
     * running rerun will reload app when file changes are detected
 1. Run tests using `rspec`. The tests will clean up the database before each test run.
 
+## Test Migration
+`sequel -m migrations postgres://gschool_user:password@localhost/login_test`
+
 ## Migrations on Heroku
 To run the migrations on heroku, run `heroku run 'rake db:migrate'`. If you
 do not have a Heroku configuration variable named DATABASE_URL, then you will need to create one.
