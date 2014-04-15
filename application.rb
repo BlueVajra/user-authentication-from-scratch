@@ -12,7 +12,6 @@ class Application < Sinatra::Application
   end
 
   get '/' do
-
     if session[:user_id]
       user_id = session[:user_id]
       user = DB[:users][:id => user_id]
@@ -31,6 +30,11 @@ class Application < Sinatra::Application
 
   post '/register' do
     session[:user_id] = DB[:users].insert(:user_email => params[:user_email], :password_digest => params[:user_password])
+    redirect '/'
+  end
+
+  get '/logout' do
+    session.clear
     redirect '/'
   end
 end

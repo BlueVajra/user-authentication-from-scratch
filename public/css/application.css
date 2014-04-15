@@ -6,7 +6,7 @@ section{
     margin: 10% auto;
     padding: 2em;
 }
-h1, input[type='submit']{
+h1#register, input[type='submit']{
 margin-left: 20%;
 }
 table{
