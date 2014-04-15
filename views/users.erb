@@ -1,0 +1,15 @@
+<h1>Users</h1>
+
+<table class="users">
+  <tr>
+    <th>ID</th>
+    <th>Email</th>
+  </tr>
+  <% users.each do |user| %>
+    <tr>
+      <td><%= user[:id]%></td>
+      <td><%= user[:user_email]%></td>
+    </tr>
+   <% end %>
+
+</table>

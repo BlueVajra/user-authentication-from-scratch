@@ -12,6 +12,23 @@ margin-left: 20%;
 table{
     width:100%;
 }
+.users{
+    width:50%;
+    border:2px solid #000000;
+}
+.users td, .users th{
+    padding:.3em;
+}
+.users td:first-child, .users th:first-child{
+    border-right:2px solid #000000;
+}
+.users tr:nth-child(even){
+    background-color:#d3d3d3;
+}
+.users th{
+    text-align:left;
+    background-color:lightslategray;
+}
 td{
     padding: 0 1em 2em 0;
 }

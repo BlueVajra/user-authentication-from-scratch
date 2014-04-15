@@ -20,8 +20,7 @@ class Application < Sinatra::Application
       user_email = nil
     end
 
-    erb :index, locals: {user: user_email}
-
+    erb :index, locals: {user: user_email, admin: session[:admin]}
   end
 
   get '/register' do
@@ -44,12 +43,18 @@ class Application < Sinatra::Application
   end
 
   post '/login' do
-
     if DB[:users][:user_email => params[:user_email]].nil? || BCrypt::Password.new(DB[:users][:user_email => params[:user_email]][:password_digest]) != params[:user_password]
       erb :login, locals: {login_error: 'Email/password is invalid'}
     else
-      session[:user_id] = DB[:users][:user_email => params[:user_email]][:id]
+      user = DB[:users][:user_email => params[:user_email]]
+      session[:user_id] = user[:id]
+      session[:admin] = user[:administrator]
       redirect '/'
     end
   end
+
+  get '/users' do
+    erb :users, locals: {users: DB[:users].all }
+  end
+
 end

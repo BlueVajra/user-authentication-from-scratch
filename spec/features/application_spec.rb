@@ -4,8 +4,25 @@ require 'capybara/rspec'
 Capybara.app = Application
 
 feature 'Homepage' do
-  before :each do
-    DB[:users].delete
+
+  context 'admininistrator privilages' do
+    before :each do
+      hashed_pass = BCrypt::Password.create("1234")
+      DB[:users].insert(
+        :user_email => 'admin@gmail.com',
+        :password_digest => hashed_pass,
+        :administrator => true )
+    end
+
+    scenario 'admin can view all users' do
+      visit '/'
+      click_on('Login')
+      fill_in 'user_email', with: 'admin@gmail.com'
+      fill_in 'user_password', with: '1234'
+      click_on('Login')
+      click_on('View all users')
+      expect(page).to have_content('Users')
+    end
   end
 
   scenario 'Shows the welcome message' do
