@@ -44,13 +44,16 @@ class Application < Sinatra::Application
   end
 
   post '/login' do
-    get_hashed_pass = DB[:users][:user_email => params[:user_email]][:password_digest]
-    if BCrypt::Password.new(get_hashed_pass) == params[:user_password]
-      session[:user_id] = DB[:users][:user_email => params[:user_email]][:id]
-      redirect '/'
+    if DB[:users][:user_email => params[:user_email]].nil?
+      erb :login, locals: { login_error: 'Email/password is invalid' }
     else
-      redirect '/login'
+      get_hashed_pass = DB[:users][:user_email => params[:user_email]][:password_digest]
+      if BCrypt::Password.new(get_hashed_pass) == params[:user_password]
+        session[:user_id] = DB[:users][:user_email => params[:user_email]][:id]
+        redirect '/'
+      else
+        redirect '/login'
+      end
     end
-
   end
 end

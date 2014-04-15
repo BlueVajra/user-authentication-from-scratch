@@ -1,5 +1,6 @@
 <h1 id="register">Login</h1>
 <form action="/login" method="post">
+  <%= "<p class='error'>#{login_error}</p>" if defined?(login_error) %>
   <table>
     <tr>
       <td class="label"><label for="user_email">Email</label></td>

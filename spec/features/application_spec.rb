@@ -42,6 +42,16 @@ feature 'Homepage' do
       expect(page).to have_content 'Login'
     end
 
+    scenario 'User cannot login with wrong email address and gets error' do
+      click_on('Logout')
+      click_on('Login')
+      expect(page).to have_content 'Login'
+      fill_in 'user_email', with: 'wrong@test.com'
+      fill_in 'user_password', with: '12345'
+      click_on('Login')
+      expect(page).to have_content 'Email/password is invalid'
+    end
+
     scenario 'User can login' do
       click_on('Logout')
       click_on('Login')
