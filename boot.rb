@@ -3,6 +3,7 @@ $LOAD_PATH.unshift('./')
 require 'sequel'
 require 'application'
 require 'dotenv'
+require 'bcrypt'
 
 Dotenv.load
 

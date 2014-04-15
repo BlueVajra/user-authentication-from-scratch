@@ -13,7 +13,7 @@ feature 'Homepage' do
     expect(page).to have_content 'Welcome!'
   end
 
-  context 'user logs in' do
+  context 'user registers and logs in' do
     before :each do
       visit '/'
       click_on('Register')
@@ -25,10 +25,31 @@ feature 'Homepage' do
     scenario 'New user can register' do
       expect(page).to have_content('Welcome user@test.com!')
     end
+
     scenario 'User can logout' do
       expect(page).to have_content('Welcome user@test.com!')
       click_on('Logout')
       expect(page).to have_content 'Welcome!'
+    end
+
+    scenario 'User cannot login with wrong password' do
+      click_on('Logout')
+      click_on('Login')
+      expect(page).to have_content 'Login'
+      fill_in 'user_email', with: 'user@test.com'
+      fill_in 'user_password', with: '12345'
+      click_on('Login')
+      expect(page).to have_content 'Login'
+    end
+
+    scenario 'User can login' do
+      click_on('Logout')
+      click_on('Login')
+      expect(page).to have_content 'Login'
+      fill_in 'user_email', with: 'user@test.com'
+      fill_in 'user_password', with: '123456'
+      click_on('Login')
+      expect(page).to have_content('Welcome user@test.com!')
     end
   end
 end

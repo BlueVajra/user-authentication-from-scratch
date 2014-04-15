@@ -29,12 +29,28 @@ class Application < Sinatra::Application
   end
 
   post '/register' do
-    session[:user_id] = DB[:users].insert(:user_email => params[:user_email], :password_digest => params[:user_password])
+    hashed_pass = BCrypt::Password.create(params[:user_password])
+    session[:user_id] = DB[:users].insert(:user_email => params[:user_email], :password_digest => hashed_pass)
     redirect '/'
   end
 
   get '/logout' do
     session.clear
     redirect '/'
+  end
+
+  get '/login' do
+    erb :login
+  end
+
+  post '/login' do
+    get_hashed_pass = DB[:users][:user_email => params[:user_email]][:password_digest]
+    if BCrypt::Password.new(get_hashed_pass) == params[:user_password]
+      session[:user_id] = DB[:users][:user_email => params[:user_email]][:id]
+      redirect '/'
+    else
+      redirect '/login'
+    end
+
   end
 end
