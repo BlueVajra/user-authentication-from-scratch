@@ -32,8 +32,8 @@ To run the migrations on heroku, run `heroku run 'rake db:migrate'`. If you
 do not have a Heroku configuration variable named DATABASE_URL, then you will need to create one.
 
 ## Heroku Apps
-- staging: http://cryptic-castle-5587.herokuapp.com
-- production: http://enigmatic-hamlet-7843.herokuapp.com
+- staging: [http://cryptic-castle-5587.herokuapp.com](http://cryptic-castle-5587.herokuapp.com)
+- production: [http://enigmatic-hamlet-7843.herokuapp.com](http://enigmatic-hamlet-7843.herokuapp.com)
 
 ## Project Tracker
 - [https://www.pivotaltracker.com/n/projects/1060106](https://www.pivotaltracker.com/n/projects/1060106)
