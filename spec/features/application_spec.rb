@@ -32,17 +32,17 @@ feature 'Homepage' do
       expect(page).to have_content 'Welcome!'
     end
 
-    scenario 'User cannot login with wrong password' do
+    scenario 'User gets error with correct email but wrong password' do
       click_on('Logout')
       click_on('Login')
       expect(page).to have_content 'Login'
       fill_in 'user_email', with: 'user@test.com'
-      fill_in 'user_password', with: '12345'
+      fill_in 'user_password', with: 'ilikesocks'
       click_on('Login')
-      expect(page).to have_content 'Login'
+      expect(page).to have_content 'Email/password is invalid'
     end
 
-    scenario 'User cannot login with wrong email address and gets error' do
+    scenario 'User gets error with wrong email address' do
       click_on('Logout')
       click_on('Login')
       expect(page).to have_content 'Login'
