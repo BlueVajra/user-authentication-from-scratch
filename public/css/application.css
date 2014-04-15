@@ -1,3 +1,27 @@
 body {
     background-color: orange;
 }
+section{
+    width: 50%;
+    margin: 10% auto;
+    padding: 2em;
+}
+h1, input[type='submit']{
+margin-left: 20%;
+}
+table{
+    width:100%;
+}
+td{
+    padding: 0 1em 2em 0;
+}
+td.label{
+    width:20%
+}
+input{
+    padding: 5px;
+    width: 100%;
+}
+input[type='submit']{
+    width:5em;
+}

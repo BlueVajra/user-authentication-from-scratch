@@ -1,8 +1,14 @@
-<h2>Register</h2>
+<h1>Register</h1>
 <form action="/register" method="post">
-  <label for="user_email">Email</label>
-  <input name="user_email" type="text">
-  <label for="user_password">Password</label>
-  <input name="user_password" type="password">
+  <table>
+    <tr>
+      <td class="label"><label for="user_email">Email</label></td>
+      <td><input name="user_email" type="text"></td>
+    </tr>
+    <tr>
+      <td class="label"><label for="user_password">Password</label></td>
+      <td><input name="user_password" type="password"></td>
+    </tr>
+  </table>
   <input type="submit" value="Register">
 </form>
