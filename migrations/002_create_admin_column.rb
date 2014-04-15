@@ -4,6 +4,6 @@ Sequel.migration do
   end
 
   down do
-    drop_column :users, :administratorc
+    drop_column :users, :administrator
   end
 end
