@@ -1,15 +1,23 @@
-<h1>Users</h1>
+<% if admin %>
+  <nav>
+    <p class="pull-left"><a href="/index">Home</a></p>
 
-<table class="users">
-  <tr>
-    <th>ID</th>
-    <th>Email</th>
-  </tr>
-  <% users.each do |user| %>
+    <p class="pull-right">Welcome, <%= user_email %> | <a href="/logout">logout</a></p>
+  </nav>
+<% end %>
+<section>
+  <h1>Users</h1>
+
+  <table class="users">
     <tr>
-      <td><%= user[:id]%></td>
-      <td><%= user[:user_email]%></td>
+      <th>ID</th>
+      <th>Email</th>
     </tr>
-   <% end %>
-
-</table>
+    <% users.each do |user| %>
+      <tr>
+        <td><%= user[:id] %></td>
+        <td><%= user[:user_email] %></td>
+      </tr>
+    <% end %>
+  </table>
+</section>

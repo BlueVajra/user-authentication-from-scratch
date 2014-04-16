@@ -1,21 +1,33 @@
 body {
     background-color: orange;
 }
+nav{
+    padding:.5em 2em;
+    background-color:rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
 section{
     width: 50%;
     margin: 10% auto;
     padding: 2em;
+    clear: both;
 }
 h1#register, input[type='submit'], .error{
 margin-left: 20%;
 }
 table{
     width:100%;
-    background: #fff;
+}
+.pull-left{
+    float: left;
+}
+.pull-right{
+    float: right;
 }
 .users{
     width:50%;
     border:2px solid #000000;
+    background: #fff;
 }
 .users td, .users th{
     padding:.3em;

@@ -50,13 +50,24 @@ class Application < Sinatra::Application
     else
       user = DB[:users][:user_email => params[:user_email]]
       session[:user_id] = user[:id]
-      #session[:admin] = user[:administrator]
       redirect '/'
     end
   end
 
   get '/users' do
-    erb :users, locals: {users: DB[:users].all }
+    if session[:user_id]
+      user_id = session[:user_id]
+      user = DB[:users][:id => user_id]
+      user_email = user[:user_email]
+      admin = user[:administrator]
+    else
+      admin = false
+    end
+    if admin
+      erb :users, locals: {users: DB[:users].all, user_email: user_email, admin: admin}
+    else
+      redirect '/'
+    end
   end
 
 end
