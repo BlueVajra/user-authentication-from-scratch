@@ -16,11 +16,13 @@ class Application < Sinatra::Application
       user_id = session[:user_id]
       user = DB[:users][:id => user_id]
       user_email = user[:user_email]
+      admin = user[:administrator]
     else
       user_email = nil
+      admin = false
     end
 
-    erb :index, locals: {user: user_email, admin: session[:admin]}
+    erb :index, locals: {user: user_email, admin: admin}
   end
 
   get '/register' do
@@ -48,7 +50,7 @@ class Application < Sinatra::Application
     else
       user = DB[:users][:user_email => params[:user_email]]
       session[:user_id] = user[:id]
-      session[:admin] = user[:administrator]
+      #session[:admin] = user[:administrator]
       redirect '/'
     end
   end
