@@ -22,9 +22,12 @@ class Application < Sinatra::Application
   end
 
   post '/register' do
-    hashed_pass = BCrypt::Password.create(params[:user_password])
-    session[:user_id] = DB[:users].insert(:user_email => params[:user_email], :password_digest => hashed_pass)
-    redirect '/'
+    if params[:user_password] == params[:confirm_password]
+      hashed_pass = BCrypt::Password.create(params[:user_password])
+      session[:user_id] = DB[:users].insert(:user_email => params[:user_email], :password_digest => hashed_pass)
+      redirect '/'
+    end
+    erb :register, locals: {registration_error: "Passwords do not match"}
   end
 
   get '/logout' do
@@ -47,15 +50,15 @@ class Application < Sinatra::Application
   end
 
   get '/users' do
-      redirect '/' if session[:user_id].nil?
+    redirect '/' if session[:user_id].nil?
 
-      user_id = session[:user_id]
-      user = DB[:users][:id => user_id]
-      admin = user[:administrator]
+    user_id = session[:user_id]
+    user = DB[:users][:id => user_id]
+    admin = user[:administrator]
 
-      redirect '/' unless admin
-      user_email = user[:user_email]
-      erb :users, locals: {users: DB[:users].all, user_email: user_email}
+    redirect '/' unless admin
+    user_email = user[:user_email]
+    erb :users, locals: {users: DB[:users].all, user_email: user_email}
 
   end
 end
