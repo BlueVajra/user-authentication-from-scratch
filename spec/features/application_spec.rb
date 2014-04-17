@@ -49,6 +49,13 @@ feature 'Homepage' do
       click_on('Register')
       expect(page).to have_content "Passwords do not match"
     end
+
+    scenario "User cannot register if their password is blank" do
+      fill_in 'user_password', with: ''
+      fill_in 'confirm_password', with: ''
+      click_on('Register')
+      expect(page).to have_content "Password can't be blank"
+    end
   end
 
   context 'registered user logs in' do
