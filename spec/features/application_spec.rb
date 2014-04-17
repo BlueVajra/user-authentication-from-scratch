@@ -4,6 +4,9 @@ require 'capybara/rspec'
 Capybara.app = Application
 
 feature 'Homepage' do
+  before :each do
+    DB[:users].delete
+  end
 
   context 'admininistrator privilages' do
     before :each do
@@ -55,6 +58,27 @@ feature 'Homepage' do
       fill_in 'confirm_password', with: ''
       click_on('Register')
       expect(page).to have_content "Password can't be blank"
+    end
+
+    scenario "User cannot register if their password is empty whitespace" do
+      fill_in 'user_password', with: '    '
+      fill_in 'confirm_password', with: '    '
+      click_on('Register')
+      expect(page).to have_content "Password can't be blank"
+    end
+
+    scenario "User cannot register with an email address that already exists" do
+      fill_in 'user_password', with: '123456'
+      fill_in 'confirm_password', with: '123456'
+      click_on('Register')
+      click_on('Logout') # first user
+
+      click_on('Register')
+      fill_in 'user_email', with: 'user@test.com'
+      fill_in 'user_password', with: 'abcd'
+      fill_in 'confirm_password', with: 'abcd'
+      click_on('Register') # second user
+      expect(page).to have_content "User email already taken"
     end
   end
 

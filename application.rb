@@ -11,8 +11,9 @@ class Application < Sinatra::Application
     BCrypt::Password.new(user_password) != form_password
   end
 
-  def validate_password(user_password, confirm_password)
-    return "Password can't be blank" if user_password.chomp == ""
+  def registration_validation(user_email, user_password, confirm_password)
+    return "User email already taken" if DB[:users][:user_email => user_email]
+    return "Password can't be blank" if user_password.strip == ""
     return "Password must be longer than 2 characters" if user_password.length < 3
     return "Passwords do not match" if user_password != confirm_password
   end
@@ -28,8 +29,8 @@ class Application < Sinatra::Application
   end
 
   post '/register' do
-    error_message = validate_password(params[:user_password], params[:confirm_password])
-    if error_message != nil
+    error_message = registration_validation(params[:user_email],params[:user_password], params[:confirm_password])
+    if error_message
       erb :register, locals: {registration_error: error_message, email: params[:user_email]}
     else
       hashed_pass = BCrypt::Password.create(params[:user_password])
