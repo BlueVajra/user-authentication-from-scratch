@@ -5,24 +5,12 @@ class Application < Sinatra::Application
 
   def initialize(app=nil)
     super(app)
-
-    # initialize any other instance variables for you
-    # application below this comment. One example would be repositories
-    # to store things in a database.
   end
 
   get '/' do
-    if session[:user_id]
-      user_id = session[:user_id]
-      user = DB[:users][:id => user_id]
-      user_email = user[:user_email]
-      admin = user[:administrator]
-    else
-      user_email = nil
-      admin = false
-    end
-
-    erb :index, locals: {user: user_email, admin: admin}
+    user_id = session[:user_id]
+    user = DB[:users][:id => user_id]
+    erb :index, locals: {user: user}
   end
 
   get '/register' do

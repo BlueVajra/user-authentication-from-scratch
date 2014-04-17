@@ -1,8 +1,8 @@
 <section>
   <% if user != nil %>
-    <h1>Welcome <%= user %>!</h1>
+    <h1>Welcome <%= user[:user_email] %>!</h1>
     <a href="/logout" alt="Logout">Logout</a>
-    <% if admin %>
+    <% if user[:administrator] %>
       <a href="/users" alt="View all users">View all users</a>
     <% end %>
   <% else %>
