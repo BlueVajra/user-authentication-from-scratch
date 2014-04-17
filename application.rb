@@ -11,6 +11,11 @@ class Application < Sinatra::Application
     BCrypt::Password.new(user_password) != form_password
   end
 
+  def validate_password(user_password, confirm_password)
+    return "Password must be longer than 2 characters" if user_password.length < 3
+    return "Passwords do not match" if user_password != confirm_password
+  end
+
   get '/' do
     user_id = session[:user_id]
     user = DB[:users][:id => user_id]
@@ -22,12 +27,14 @@ class Application < Sinatra::Application
   end
 
   post '/register' do
-    if params[:user_password] == params[:confirm_password]
+    error_message = validate_password(params[:user_password],params[:confirm_password])
+    if !error_message.nil?
+      erb :register, locals: {registration_error: error_message, email: params[:user_email]}
+    else
       hashed_pass = BCrypt::Password.create(params[:user_password])
       session[:user_id] = DB[:users].insert(:user_email => params[:user_email], :password_digest => hashed_pass)
       redirect '/'
     end
-    erb :register, locals: {registration_error: "Passwords do not match"}
   end
 
   get '/logout' do

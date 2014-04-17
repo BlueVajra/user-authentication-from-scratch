@@ -31,10 +31,19 @@ feature 'Homepage' do
   end
 
   context 'user registers' do
-    scenario "user cannot register if passwords don't match" do
+    before :each do
       visit '/'
       click_on('Register')
       fill_in 'user_email', with: 'user@test.com'
+    end
+    scenario "User cannot register if their password is less than 3 characters" do
+      fill_in 'user_password', with: 'xy'
+      fill_in 'confirm_password', with: 'xy'
+      click_on('Register')
+      expect(page).to have_content "Password must be longer than 2 characters"
+    end
+
+    scenario "user cannot register if passwords don't match" do
       fill_in 'user_password', with: '123456'
       fill_in 'confirm_password', with: '12345'
       click_on('Register')
