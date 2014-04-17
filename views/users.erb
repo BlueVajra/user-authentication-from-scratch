@@ -15,6 +15,7 @@
       <tr>
         <td><%= user[:id] %></td>
         <td><%= user[:user_email] %></td>
+        <td class="user"><a href="/user/<%= user[:id] %>">Edit</a></td>
       </tr>
     <% end %>
   </table>
