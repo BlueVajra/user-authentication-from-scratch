@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link href="css/normalize.css" rel="stylesheet" type="text/css">
-    <link href="css/application.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-    <%= yield %>
+<head>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link href="/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="/css/application.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>Log.("in")</h1>
+  </div>
+</header>
 
-  </body>
+<nav>
+  <div class="container">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <% if defined?(user[:administrator]) && user[:administrator] %>
+        <li><a href="/users" alt="View all users">View all users</a></li>
+      <% end %>
+    </ul>
+    <% if defined?(user) && user != nil %>
+      <p class="login">Welcome, <%= user[:user_email] %> | <a href="/logout">Logout</a></p>
+    <% else %>
+      <p class="login"><a href="/login" alt="Login">Login</a> | <a href="/register">Register</a>
+    <% end %>
+  </div>
+</nav>
+<div class="body">
+  <div class="container">
+    <%= yield %>
+  </div>
+</div>
+<footer>
+  <div class="container">
+    <section>
+      <h3>Who We Are</h3>
+
+      <p>Bacon ipsum dolor sit amet andouille brisket tongue, capicola short loin sirloin rump chicken. Meatball
+        meatloaf pork chop short ribs.</p>
+    </section>
+    <section><h3>Contact</h3>
+    <address>
+      123 Sesame Street<br>
+      Boulder, CO 80304
+    </address>
+    </section>
+    <section><h3>Location</h3></section>
+  </div>
+</footer>
+</body>
 </html>

@@ -1,29 +1,129 @@
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    box-sizing:         border-box;
+}
+html {
+}
+
 body {
     background-color: orange;
 }
+
+
+.container{
+    width:100%;
+    margin:0 auto;
+    max-width: 980px;
+}
+.body{
+    min-height:400px
+}
+
+/* Header and NAv */
+
 nav{
-    padding:.5em 2em;
     background-color:rgba(255, 255, 255, 0.5);
     overflow: hidden;
+    -webkit-box-shadow: 0px 4px 5px 3px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 4px 5px 3px rgba(0,0,0,0.35);
+    box-shadow: 0px 4px 5px 3px rgba(0,0,0,0.35);
 }
-section{
+
+
+nav ul, nav ul li{
+    float: left;
+    padding:0;
+    margin:0;
+}
+nav .login{
+    float: right;
+    padding: .5em 1em;
+    margin-right:1em;
+}
+nav ul{
+    float:left;
+    margin-left:1em;
+}
+nav ul li{
+    list-style-type: none;
+    display:block;
+}
+
+nav ul li a{
+    display:block;
+    padding: .5em 1em;
+    background-color: steelblue;
+    font-size:1.2em;
+    color:#ffffff;
+}
+nav ul li+li a{
+    margin-left:3px;
+}
+
+nav p{
+    padding: 0;
+    margin:0;
+}
+
+footer{
+    background-color:darkorange;
+    overflow: hidden;
+    padding:1em 0;
+}
+
+footer section{
+
+    width:32%;
+    float:left;
+    padding:1em;
+    height:100%;
+    background-color:rgba(255, 255, 255, 0.5);
+
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+footer section+section{
+    margin-left:1em;
+}
+/* special */
+
+section.authorization{
     width: 50%;
-    margin: 10% auto;
-    padding: 2em;
+    margin: 5% auto;
+    padding: 1em;
     clear: both;
+    background-color:rgba(255, 255, 255, 0.5);
+
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    z-index:-1;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
+
+
+/* General Styling */
 h1#register, input[type='submit'], .error{
     margin-left: 30%;
 }
+
 table{
     width:100%;
 }
-.pull-left{
-    float: left;
+
+td.buttons{
+    text-align:right;
+    border-top:2px solid #000000;
 }
-.pull-right{
-    float: right;
-}
+
+
+
 .users{
     width:50%;
     border:2px solid #000000;
