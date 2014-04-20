@@ -6,14 +6,19 @@
       <th>Email</th>
       <th>Admin</th>
       <th>Edit</th>
+      <th></th>
     </tr>
     <% users.each do |user| %>
+      <form action="/user/<%= user[:id] %>" method="post">
+        <input type="hidden" name="_method" value="delete">
       <tr>
         <td><%= user[:id] %></td>
         <td><%= user[:user_email] %></td>
         <td><%= user[:administrator] %></td>
-        <td class="user"><a href="/user/<%= user[:id] %>">Edit</a></td>
+        <td><a href="/user/<%= user[:id] %>">Edit</a></td>
+        <td><input type="submit" value="Delete"></td>
       </tr>
+        </form>
     <% end %>
   </table>
 </section>

@@ -43,18 +43,15 @@ feature 'Homepage' do
         fill_in 'confirm_password', with: 'abcd'
         click_button('Register')
         click_link('Logout')
-      end
-      scenario "edit user to become admin" do
-        visit '/'
         click_on('Login')
         fill_in 'user_email', with: 'admin@gmail.com'
         fill_in 'user_password', with: '1234'
         click_button('Login')
+      end
+      scenario "admin can make user admin" do
+
         click_link('View all users')
-        within('tr:nth-child(4)')  do
-          click_on('Edit')
-        end
-        #save_and_open_page
+        page.find('tr', :text => 'user2@test.com').click_link('Edit')
         check('admin')
         click_button('Save')
         click_link('Logout')
@@ -63,8 +60,16 @@ feature 'Homepage' do
         fill_in 'user_email', with: 'user2@test.com'
         fill_in 'user_password', with: 'abcd'
         click_button('Login')
+        expect(page).to have_content('View all users')
+      end
+
+      scenario "admin can delete user" do
+
         click_link('View all users')
-        #expect(page).to have_content("Welcome user1@gmail.com!")
+        page.find('tr', :text => 'user2@test.com').click_button('Delete')
+        click_link('View all users')
+        expect(page).to_not have_content('user2@test.com')
+
       end
     end
   end

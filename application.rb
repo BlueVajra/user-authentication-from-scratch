@@ -92,7 +92,11 @@ class Application < Sinatra::Application
     if checked != user_by_id(params[:id])[:administrator]
       DB[:users].where(id: params[:id]).update(administrator: checked)
     end
-    puts "ADMIN?: #{user_by_id(params[:id])[:administrator]}"
+    redirect "/users"
+  end
+
+  delete '/user/:id' do
+    DB[:users].where(id: params[:id]).delete
     redirect "/users"
   end
 end
