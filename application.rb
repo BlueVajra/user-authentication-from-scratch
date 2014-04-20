@@ -18,9 +18,18 @@ class Application < Sinatra::Application
     return "Passwords do not match" if user_password != confirm_password
   end
 
+  def user_by_id(user_id)
+    #user_id = session[:user_id]
+    DB[:users][:id => user_id]
+  end
+
+  def user_by_email(email)
+    DB[:users][:user_email => email]
+  end
+
   get '/' do
-    user_id = session[:user_id]
-    user = DB[:users][:id => user_id]
+    #user_id = session[:user_id]
+    user = user_by_id(session[:user_id])
     erb :index, locals: {user: user}
   end
 
@@ -49,7 +58,7 @@ class Application < Sinatra::Application
   end
 
   post '/login' do
-    user = DB[:users][:user_email => params[:user_email]]
+    user = user_by_email(params[:user_email])
     if user.nil? || invalid_password?(user[:password_digest], params[:user_password])
       erb :login, locals: {login_error: 'Email/password is invalid'}
     else
@@ -60,14 +69,30 @@ class Application < Sinatra::Application
 
   get '/users' do
     redirect '/' if session[:user_id].nil?
-
-    user_id = session[:user_id]
-    user = DB[:users][:id => user_id]
+    user = user_by_id(session[:user_id])
     admin = user[:administrator]
-
     redirect '/' unless admin
-    user_email = user[:user_email]
-    erb :users, locals: {users: DB[:users].all, user_email: user_email}
 
+    user_email = user[:user_email]
+    erb :users, locals: {users: DB[:users].all, user: user, user_email: user_email}
+
+  end
+
+  get '/user/:id' do
+    redirect '/' if session[:user_id].nil?
+    user = user_by_id(session[:user_id])
+    admin = user[:administrator]
+    redirect '/' unless admin
+
+    erb :user, locals: {user: user_by_id(session[:user_id]), user_to_edit: user_by_id(params[:id])}
+  end
+
+  put '/user/:id' do
+    checked = params[:admin] == 'on' ? true : false
+    if checked != user_by_id(params[:id])[:administrator]
+      DB[:users].where(id: params[:id]).update(administrator: checked)
+    end
+    puts "ADMIN?: #{user_by_id(params[:id])[:administrator]}"
+    redirect "/users"
   end
 end
