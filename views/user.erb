@@ -2,22 +2,23 @@
   <h2>Edit User <%= user_to_edit[:user_email] %></h2>
 
   <p>Edit and hit 'Save'</p>
+
   <form action="/user/<%= user_to_edit[:id] %>" method="post">
     <input type="hidden" name="_method" value="put">
-  <table class="users">
-    <tr>
-      <th>ID</th>
-      <th>Email</th>
-      <th>Admin</th>
-    </tr>
-    <tr>
-      <td><%= user_to_edit[:id] %></td>
-      <td><%= user_to_edit[:user_email] %></td>
-      <td><input type="checkbox" name="admin" <%= "checked" if user_to_edit[:administrator] %>></td>
-    </tr>
-    <tr>
-      <td colspan="3" class="buttons"><input type="submit" value="Save"></td>
-    </tr>
+    <table class="users">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Admin</th>
+      </tr>
+      <tr>
+        <td><%= user_to_edit[:id] %></td>
+        <td><%= user_to_edit[:user_email] %></td>
+        <td><input type="checkbox" name="admin" <%= "checked" if user_to_edit[:administrator] %>></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="buttons"><input type="submit" value="Save"></td>
+      </tr>
     </table>
 
   </form>

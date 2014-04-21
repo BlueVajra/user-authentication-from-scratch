@@ -34,6 +34,10 @@ class Application < Sinatra::Application
       DB[:users][:user_email => email]
     end
 
+    def user_by_uid(provider,uid)
+      DB[:users][:provider => provider, :uid => uid]
+    end
+
     def check_user
       redirect '/' unless session[:user_id]
     end
@@ -110,13 +114,20 @@ class Application < Sinatra::Application
   end
 
   get '/auth/:provider/callback' do
-    github_json_user_info = JSON.pretty_generate(request.env['omniauth.auth'])
-    github_user_info = JSON.parse(github_json_user_info)
-    github_user_nickname = github_user_info['info']['name']
-    user = user_by_email(github_user_nickname)
+    json_user_info = JSON.pretty_generate(request.env['omniauth.auth'])
+    user_info = JSON.parse(json_user_info)
+    user_name = user_info['info']['name']
+    user_uid = user_info['uid']
+    user_provider = user_info['provider']
+
+    user = user_by_uid(user_provider, user_uid)
 
     if user.nil?
-      session[:user_id] = DB[:users].insert(:user_email => github_user_nickname)
+      session[:user_id] = DB[:users].insert(
+        :user_email => user_name,
+        :provider => user_provider,
+        :uid => user_uid,
+      )
     else
       session[:user_id] = user[:id]
     end
