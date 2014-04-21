@@ -3,7 +3,7 @@ ENV['RACK_ENV'] = 'test'
 require_relative '../boot'
 
 require 'lib/tasks/db'
-
+OmniAuth.config.test_mode = true
 RSpec.configure do |config|
   config.order = 'random'
 

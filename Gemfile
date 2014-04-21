@@ -5,6 +5,9 @@ gem 'sequel', '~> 4.9.0'
 gem 'pg', '~> 0.17.1'
 gem 'dotenv', '~> 0.10.0'
 gem 'bcrypt', '~> 3.1.7'
+gem 'omniauth', '~> 1.2.1'
+gem 'omniauth-oauth', '~> 1.0.1'
+gem 'omniauth-github', '~> 1.1.2'
 
 
 group :test do

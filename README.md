@@ -8,9 +8,10 @@ There are a few things you need to change for your application:
 
 1. Change `scrips/create_databases.sql` to create both your development and test databases.
 1. Copy the `.env.example` file to `.env`.
-1. Change the `.env` file to include your database connection strings for both your development
-and test databases. This file is ignored by git (see .gitignore) to protect your secrets
+1. Change the `.env` file to . This file is ignored by git (see .gitignore) to protect your secrets
 from the outside world.
+  1. include your database connection strings for both your development and test databases
+  1. inclue github keys
 1. Add your migrations to the `migrations` folder. Once you have one migration there, you can
 delete the `.gitsave` file.
 

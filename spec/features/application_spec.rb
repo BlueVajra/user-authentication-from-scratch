@@ -74,10 +74,6 @@ feature 'Homepage' do
     end
   end
 
-  scenario 'Shows the welcome message' do
-    visit '/'
-    expect(page).to have_content 'Welcome!'
-  end
 
   context 'user registers' do
     before :each do
@@ -175,4 +171,26 @@ feature 'Homepage' do
     end
   end
 
+  context 'github user logs in' do
+    before :each do
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
+        {
+          :provider => 'github',
+          :uid => '123545',
+          :info => {
+            :name => 'GitTest',
+          }
+        }
+      )
+    end
+
+    scenario 'User logs in using github' do
+      visit '/'
+      click_link('Login')
+      click_link('Login with GitHub')
+      expect(page).to have_content('Welcome GitTest!')
+
+
+    end
+  end
 end

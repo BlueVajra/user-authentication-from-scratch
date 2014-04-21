@@ -4,6 +4,8 @@ require 'sequel'
 require 'application'
 require 'dotenv'
 require 'bcrypt'
+require 'omniauth'
+require 'omniauth-github'
 
 Dotenv.load
 
